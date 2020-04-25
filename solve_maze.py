@@ -1,13 +1,27 @@
 import maze
 import generate_maze
 import sys
+import random
 
 
 # Solve maze using Pre-Order DFS algorithm, terminate with solution
 def solve_dfs(m):
-    # TODO: Implement solve_dfs
-    pass
-
+    backtrack=[]
+    current_cell = 0
+    visited = 0
+    while(current_cell != m.total_cells-1):
+        neighbors= m.cell_neighbors(current_cell)
+        if(neighbors):
+            new_cell,comp= random.choice(neighbors)
+            m.visit_cell(current_cell, new_cell, comp)
+            backtrack.append(current_cell)
+            current_cell=new_cell
+            visited+=1
+        else:
+            m.backtrack(current_cell)
+            current_cell= backtrack.pop()
+        m.refresh_maze_view()
+    m.state='idle'
 
 # Solve maze using BFS algorithm, terminate with solution
 def solve_bfs(m):
